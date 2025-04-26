@@ -9,10 +9,10 @@ DIRECTIONS = [
 
 def dfs(start_state):
     stack = deque()
-    stack.append((start_state, []))
+    stack.append((start_state, []))  # roomba
     visited = set()
 
-    nodes_generated = 1 # roomba
+    nodes_generated = 1
     nodes_expanded = 0
 
     while stack:
@@ -21,8 +21,10 @@ def dfs(start_state):
         if is_goal(state):
             print_solution(path, nodes_generated, nodes_expanded)
             return
+
         if state in visited:
             continue
+
         visited.add(state)
         nodes_expanded += 1
 
@@ -62,32 +64,3 @@ def print_solution(path, nodes_generated, nodes_expanded):
 grid = []
 cols = 0
 rows = 0
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) != 2:
-        print("Usage: python3 DFS.py [world-file]")
-        sys.exit(1)
-
-    filename = sys.argv[1]
-
-    with open(filename, 'r') as f:
-        lines = [line.strip() for line in f if line.strip()]
-    grid = [list(line) for line in lines]
-
-    cols = len(grid[0])
-    rows = len(grid)
-
-    start_pos = None
-    dirt = set()
-    for y in range(rows):
-        for x in range(cols):
-            if grid[y][x] == '@':
-                start_pos = (x, y)
-            if grid[y][x] == '*':
-                dirt.add((x, y))
-
-    start_state = (start_pos, frozenset(dirt))
-
-    dfs(start_state)

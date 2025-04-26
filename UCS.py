@@ -9,7 +9,7 @@ DIRECTIONS = [
 
 def ucs(start_state):
     heap = []
-    heapq.heappush(heap, (0, start_state, []))
+    heapq.heappush(heap, (0, start_state, []))  # roomba
     visited = set()
 
     nodes_generated = 1
@@ -64,32 +64,3 @@ def print_solution(path, nodes_generated, nodes_expanded):
 grid = []
 cols = 0
 rows = 0
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) != 2:
-        print("Usage: python3 UCS.py [world-file]")
-        sys.exit(1)
-
-    filename = sys.argv[1]
-
-    with open(filename, 'r') as f:
-        lines = [line.strip() for line in f if line.strip()]
-    grid = [list(line) for line in lines]
-
-    cols = len(grid[0])
-    rows = len(grid)
-
-    start_pos = None
-    dirt = set()
-    for y in range(rows):
-        for x in range(cols):
-            if grid[y][x] == '@':
-                start_pos = (x, y)
-            if grid[y][x] == '*':
-                dirt.add((x, y))
-
-    start_state = (start_pos, frozenset(dirt))
-
-    ucs(start_state)
